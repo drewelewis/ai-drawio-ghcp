@@ -36,6 +36,12 @@ diagrams are welcome.
 
 ## Validator and diagram changes
 
+The optional [Azure Diagram Architect agent](.github/agents/azure-diagram-architect.agent.md)
+owns research and orchestration. Keep diagram mechanics in the existing skills.
+Preserve official-documentation citations, explicit research limitations, optional
+tool discovery, and the separation between proposed and verified architecture.
+Do not hardcode a model or require a particular MCP server for all users.
+
 - Use uncompressed `.drawio` XML for reviewable diffs.
 - Preserve unrelated cells, IDs, pages, metadata, and layout when editing.
 - Add regression coverage when changing validation behavior. The tests use

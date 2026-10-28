@@ -46,6 +46,17 @@ foreach ($directory in $skillDirectories) {
     Write-Host "PASS skill metadata: $name"
 }
 
+$agentPath = Join-Path $githubRoot 'agents\azure-diagram-architect.agent.md'
+$agentText = Get-Content -LiteralPath $agentPath -Raw
+$agentMetadata = [regex]::Match(
+    $agentText,
+    '\A---\r?\nname: Azure Diagram Architect\r?\ndescription: ''(?<description>(?:[^''\r\n]|'''')+)''\r?\n---(?:\r?\n|\z)'
+)
+if (-not $agentMetadata.Success -or $agentMetadata.Groups['description'].Value.Length -gt 1024) {
+    throw "Invalid Azure Diagram Architect agent metadata in '$agentPath'."
+}
+Write-Host 'PASS Azure Diagram Architect agent metadata'
+
 $markdownFiles = @(Get-ChildItem -LiteralPath $repositoryRoot -Filter '*.md' -File) +
     @(Get-ChildItem -LiteralPath $githubRoot -Filter '*.md' -Recurse -File)
 foreach ($file in $markdownFiles) {

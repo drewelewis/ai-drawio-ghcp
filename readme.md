@@ -66,6 +66,11 @@ dependency-free checks do not install or run the real renderer. A successful run
 
 Open Copilot Chat, choose an agent-capable mode, and paste:
 
+For Microsoft documentation research before drawing, select the optional
+**Azure Diagram Architect** agent instead and use the
+[documentation-grounded workflow](#azure-diagram-architect-agent) below.
+The direct skill command remains available without the custom agent:
+
 ```text
 /azure-drawio Create diagrams/web-app.drawio as a logical Azure architecture
 diagram for a technical design review.
@@ -104,6 +109,41 @@ To try the editor without using Copilot, open the
 [starter diagram](.github/skills/azure-drawio/assets/azure-web-app.drawio) and use
 **Save As** to work on a copy. It is an illustrative logical example, not a
 production reference architecture.
+
+## Azure Diagram Architect agent
+
+Select **Azure Diagram Architect** in Copilot Chat's agent picker for a guided
+**research -> diagram -> validate -> optional SVG export** workflow. Its
+[repository-local definition](.github/agents/azure-diagram-architect.agent.md)
+coordinates the existing skills rather than replacing them or requiring another
+background agent.
+
+For example, select the agent and send this ordinary-language request:
+
+```text
+Research relevant Microsoft Learn and Azure Architecture Center guidance for
+an App Service application behind API Management, using Storage, Key Vault,
+and Application Insights. Cite the sources and clarify material design choices
+before drawing. Create diagrams/researched-web-app.drawio as a logical view,
+validate it, and export every page to SVG in docs/images.
+```
+
+The agent prefers available Microsoft documentation tools, such as Microsoft Learn
+MCP, and otherwise uses official Microsoft web documentation through available web
+tools. The agent file **does not install or configure those tools**. No Azure
+subscription or particular Azure extension is required. If neither research route
+is available, it asks for documentation or permission to proceed with a clearly
+unverified conceptual sketch instead of claiming it researched the design.
+
+Review the cited patterns, decisions, and assumptions as well as the diagram.
+Documentation research is not an architecture certification. SVG export still
+requires the optional local draw.io Desktop renderer.
+
+If the agent is not listed, confirm you opened the repository root and inspect
+**Chat: Open Customizations** and your client's custom-agent support. To reuse the
+complete workflow elsewhere, copy `.github/agents/azure-diagram-architect.agent.md`
+and all four `.github/skills/` directories together, preserving their relative
+layout and reviewing any existing customizations before merging.
 
 ## Included skills
 
