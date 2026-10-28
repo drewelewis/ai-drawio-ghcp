@@ -47,3 +47,6 @@ an image. This workflow documents a design; it does not provision Azure resource
 8. Return a link to the saved diagram, summarize the topology and assumptions,
    and report structural and visual validation separately. Do not claim that XML
    validation proves the Azure architecture is secure or deployable.
+9. If the user also requests SVG output, use the repository's `export-drawio`
+   skill after saving the source. It renders all pages locally and preserves the
+   `.drawio` file. Do not generate an SVG by renaming the XML source.

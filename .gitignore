@@ -3,3 +3,4 @@ Thumbs.db
 Desktop.ini
 *.dtmp
 *.drawio.bkp
+.drawio-export-*/

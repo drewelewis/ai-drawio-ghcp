@@ -9,7 +9,7 @@ $githubRoot = Join-Path $repositoryRoot '.github'
 $skillsRoot = Join-Path $githubRoot 'skills'
 $skillDirectories = @(Get-ChildItem -LiteralPath $skillsRoot -Directory)
 
-foreach ($requiredSkill in @('azure-drawio', 'edit-drawio', 'validate-drawio')) {
+foreach ($requiredSkill in @('azure-drawio', 'edit-drawio', 'validate-drawio', 'export-drawio')) {
     if ($requiredSkill -cnotin $skillDirectories.Name) {
         throw "Missing required skill '$requiredSkill'."
     }
@@ -98,6 +98,10 @@ if ($LASTEXITCODE -ne 0) {
 & (Join-Path $validatorDirectory 'Test-DrawioValidator.ps1')
 if ($LASTEXITCODE -ne 0) {
     throw 'Validator regression tests failed.'
+}
+& (Join-Path $skillsRoot 'export-drawio\scripts\Test-DrawioExport.ps1')
+if ($LASTEXITCODE -ne 0) {
+    throw 'SVG export regression tests failed.'
 }
 
 Write-Host 'PASS repository checks'

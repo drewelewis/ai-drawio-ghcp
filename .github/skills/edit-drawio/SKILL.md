@@ -47,3 +47,6 @@ Make targeted changes to an existing editable diagram without recreating it.
    issues, and validation results. If rendering was unavailable, state that the
    visual check was not performed. Structural validity is not architecture
    certification.
+9. If the user requests refreshed SVGs, use `export-drawio` after saving the
+   changes. Ask before replacing existing exports; do not silently leave a stale
+   SVG while claiming it reflects the updated diagram.

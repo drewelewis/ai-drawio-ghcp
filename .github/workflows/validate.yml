@@ -31,3 +31,17 @@ jobs:
           persist-credentials: false
       - name: Validate skills, documentation, scripts, and diagrams
         run: '& .\.github\scripts\Test-Repository.ps1'
+      - name: Set up draw.io Desktop for SVG integration checks
+        if: runner.os == 'Windows'
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP 'drawio-windows.zip'
+          Invoke-WebRequest -Uri 'https://github.com/jgraph/drawio-desktop/releases/download/v32.6.1/draw.io-32.6.1-windows.zip' -OutFile $archive
+          if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash -ine '41291ad0c06469c183b65793e7604dcb83a6d21d8e339a333790cb1d7576a2ed') {
+            throw 'draw.io archive checksum mismatch.'
+          }
+          Expand-Archive -LiteralPath $archive -DestinationPath (Join-Path $env:RUNNER_TEMP 'drawio-renderer')
+      - name: Render SVGs and verify embedded icons and every page
+        if: runner.os == 'Windows'
+        run: |
+          $renderer = Join-Path $env:RUNNER_TEMP 'drawio-renderer\draw.io.exe'
+          & .\.github\skills\export-drawio\scripts\Test-DrawioExport.ps1 -DrawioPath $renderer

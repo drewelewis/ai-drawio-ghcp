@@ -42,6 +42,11 @@ diagrams are welcome.
   PowerShell and .NET only and must not require Azure credentials or network access.
 - Do not claim that structural XML checks validate architecture security or
   production readiness.
+- For export changes, run `Test-DrawioExport.ps1` in the export skill's scripts
+  directory with `-DrawioPath` pointing to draw.io Desktop. Verify actual SVG
+  content, embedded icons, page selection, overwrite protection, and unchanged
+  source diagrams. The dependency-free repository checks explicitly skip real
+  rendering; CI exercises it on Windows using a pinned, checksum-verified archive.
 - Use only original or appropriately licensed contributions. Do not commit copied
   product icon binaries; use the editor's built-in libraries and follow the
   [Azure icon guidelines](https://learn.microsoft.com/azure/architecture/icons/).
