@@ -74,7 +74,7 @@ try {
         if ($svg.DocumentElement.LocalName -cne 'svg' -or
             $svg.DocumentElement.NamespaceURI -cne 'http://www.w3.org/2000/svg' -or
             $svg.DocumentElement.HasAttribute('content') -or
-            -not $svg.InnerText.Contains('Azure App Service') -or $images.Count -lt 5) {
+            -not $svg.DocumentElement.InnerText.Contains('Azure App Service') -or $images.Count -lt 5) {
             throw 'SVG lacks expected drawing content, labels or Azure icons, or includes diagram XML.'
         }
         foreach ($image in $images) {
@@ -97,7 +97,7 @@ try {
         for ($page = 1; $page -le 2; $page++) {
             $svg.Load((Join-Path $multiDirectory "multiple pages-page-$page.svg"))
             $expected = if ($page -eq 1) { 'FIRST PAGE MARKER' } else { 'SECOND PAGE MARKER' }
-            if (-not $svg.InnerText.Contains($expected)) { throw "Wrong page rendered in SVG $page." }
+            if (-not $svg.DocumentElement.InnerText.Contains($expected)) { throw "Wrong page rendered in SVG $page." }
         }
         Write-Host 'PASS all pages rendered to distinct numbered SVGs'
     }

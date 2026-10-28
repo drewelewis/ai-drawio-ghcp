@@ -127,7 +127,8 @@ try {
             throw "draw.io produced no SVG for page $($index + 1)."
         }
         $settings = [System.Xml.XmlReaderSettings]::new()
-        $settings.DtdProcessing = [System.Xml.DtdProcessing]::Prohibit
+        # draw.io SVGs include a doctype; ignore it without resolving external resources.
+        $settings.DtdProcessing = [System.Xml.DtdProcessing]::Ignore
         $settings.XmlResolver = $null
         $reader = [System.Xml.XmlReader]::Create($stagedFiles[$index], $settings)
         try {
